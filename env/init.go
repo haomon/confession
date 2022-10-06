@@ -48,6 +48,7 @@ func setLog() {
 func SetDefultValue() {
 	AlertTitle = "CaAlert通知"
 	ChatPrefix = "ㄡ~修女啊，"
+	Nuniskill = map[int64]string{}
 }
 func GetchatIDs(str_chatIDs []string) (err error, chatIDs []int64) {
 	for _, str_chatID := range str_chatIDs {

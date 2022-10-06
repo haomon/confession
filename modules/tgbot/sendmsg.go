@@ -3,6 +3,7 @@ package tgbot
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"strings"
 	"testproject/confession/env"
@@ -26,6 +27,7 @@ func imageByte(url string) []byte {
 func (bot *Bot) HandleUpdate(update tgbotapi.Update) {
 	text := update.Message.Text
 	sticker := update.Message.Sticker
+	photo := update.Message.Photo
 
 	// userchatID := update.Message.Chat.ID
 	// fmt.Println(userchatID)
@@ -36,10 +38,16 @@ func (bot *Bot) HandleUpdate(update tgbotapi.Update) {
 			bot.AnalyzeText(update)
 		}
 	case sticker != nil:
-		fmt.Println(sticker.FileID)
+		// fmt.Println(sticker.FileID)
 		// replyMsg := tgbotapi.NewStickerShare(env.LogchatID, "CAACAgUAAxkBAAOUYzpShhs4JzzEK5cEDqSe0e1KzeYAAmwBAAJvL7ojW2D8vo04eqwqBA")
 		// replyMsg.ReplyToMessageID = update.Message.MessageID
 		// _, _ = bot.Send(replyMsg)
+	case photo != nil:
+		fmt.Println(update.Message.Caption)
+		caption := update.Message.Caption
+		if len(caption) > 0 && strings.HasPrefix(caption, "安妮亞喜歡這個修女") {
+			bot.killlakillnun(update)
+		}
 	}
 
 }
@@ -49,16 +57,47 @@ func (bot *Bot) AnalyzeText(update tgbotapi.Update) {
 	text := update.Message.Text
 	text = text[len(env.ChatPrefix):]
 	chatID := update.Message.Chat.ID
-	if strings.HasPrefix(text, "http") {
+
+	var lotton bool
+	if strings.Contains(text, "[") && strings.Contains(text, "]") {
+		lotton = true
+	}
+
+	var respmsg string
+	switch {
+	case strings.HasPrefix(text, "http"):
 		photoBytes := imageByte("https://memeprod.sgp1.digitaloceanspaces.com/user-template/4cf02807f8248a46d6f0ded47595a923.png")
 		bot.SendImage(chatID, photoBytes)
 		return
+	case strings.HasPrefix(text, "救救我") && lotton:
+		li := strings.Index(text, "[")
+		ri := strings.Index(text, "]")
+		lottoString := text[li+1 : ri]
+		lotto := strings.Split(lottoString, " ")
+
+		result := lotto[rand.Intn(len(lotto))]
+		respmsg = result + "，會是你最好的選擇。"
+	default:
+		respmsg = "你的意思是說，" + text + "。不過沒關係，一切都好起來的。"
 	}
 
-	respmsg := "你的意思是說，" + text + "。不過沒關係，一切都好起來的。"
 	photoBytes := imageByte("http://i1.hdslb.com/bfs/archive/ec20e0f5fbaa5f8252bf761e4b359edbb767fc43.png")
 	// bot.SendText(chatID, respmsg)
-	bot.SendImageAddMsg(chatID, photoBytes, respmsg)
+	if _, ok := env.Nuniskill[chatID]; ok {
+		bot.SendImageIdAddMsg(chatID, env.Nuniskill[chatID], respmsg)
+	} else {
+		bot.SendImageAddMsg(chatID, photoBytes, respmsg)
+	}
+
+}
+
+//換
+func (bot *Bot) killlakillnun(update tgbotapi.Update) {
+	chatID := update.Message.Chat.ID
+	photo := *update.Message.Photo
+	fId := photo[0].FileID
+	env.Nuniskill[chatID] = fId
+	bot.SendImageIdAddMsg(chatID, env.Nuniskill[chatID], "新修女上線，直到主教將原修女找回來")
 }
 
 //處理送往訊息管理群的訊息

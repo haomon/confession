@@ -39,6 +39,12 @@ func (bot *Bot) SendImage(chatID int64, dataByte []byte) {
 	_, _ = bot.Botapi.Send(replyImg)
 }
 
+func (bot *Bot) SendImageIdAddMsg(chatID int64, flieId string, msg string) {
+	replyImg := tgbotapi.NewPhotoShare(chatID, flieId)
+	replyImg.Caption = msg
+	_, _ = bot.Botapi.Send(replyImg)
+}
+
 func (bot *Bot) SendImageAddMsg(chatID int64, dataByte []byte, msg string) {
 	photoFileBytes := tgbotapi.FileBytes{
 		Name:  "picture",

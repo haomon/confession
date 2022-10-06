@@ -35,9 +35,9 @@ func init() {
 	serverCmd.Flags().BoolVarP(&env.Debug, "debug", "d", false, "Start Debug Mode")
 	serverCmd.Flags().StringVarP(&env.Build, "build", "b", "0.0.0.0", "Server Build IP")
 	serverCmd.Flags().BoolVar(&env.Pprof, "pprof", false, "Server Pprof IP")
-	serverCmd.Flags().StringVarP(&env.TGToken, "tgtoken", "tg", "0000", "TG Bot Token")
-	serverCmd.Flags().Int64VarP(&env.LogchatID, "logchat", "lcid", 0, "Log Chat ID")
-	serverCmd.Flags().Int64VarP(&env.ChatID, "chat", "cid", 0, "Chat ID")
+	serverCmd.Flags().StringVarP(&env.TGToken, "tgtoken", "t", "0000", "TG Bot Token")
+	serverCmd.Flags().Int64VarP(&env.LogchatID, "logchat", "l", 0, "Log Chat ID")
+	serverCmd.Flags().Int64VarP(&env.ChatID, "chat", "c", 0, "Chat ID")
 }
 
 func server() {

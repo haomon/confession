@@ -28,4 +28,6 @@ var (
 	TidCode string
 	// 訊息警報Title
 	AlertTitle string
+
+	Nuniskill map[int64]string
 )
