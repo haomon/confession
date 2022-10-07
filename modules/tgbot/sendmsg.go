@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"strings"
 	"testproject/confession/env"
 	"time"
@@ -43,9 +44,9 @@ func (bot *Bot) HandleUpdate(update tgbotapi.Update) {
 		// replyMsg.ReplyToMessageID = update.Message.MessageID
 		// _, _ = bot.Send(replyMsg)
 	case photo != nil:
-		fmt.Println(update.Message.Caption)
+		// fmt.Println(update.Message.Caption)
 		caption := update.Message.Caption
-		if len(caption) > 0 && strings.HasPrefix(caption, "安妮亞喜歡這個修女") {
+		if len(caption) > 0 && caption == "安妮亞喜歡這個修女" {
 			bot.killlakillnun(update)
 		}
 	}
@@ -120,6 +121,7 @@ func (bot *Bot) RespNowTime() {
 	twelve := "CAACAgUAAxkBAAObYzpTuZ999NCn4vZdy5BDRzkJAVMAAm8BAAJvL7ojAV9DSiMBSasqBA"
 	ten := "CAACAgUAAxkBAAPCYzqH61H_i2x6yTaKck_Lv0PetD4AAm0BAAJvL7ojRdP1rSA7LnwqBA"
 	fridayTen := "CAACAgUAAxkBAAOfYzpUZR-HubpnmgABHGePT8ayrnvjAAJVBQACby-6I5UH8HAxbvwCKgQ"
+	bot.LogText("報時執行小時:" + strconv.Itoa(time.Now().Hour()))
 	switch time.Now().Hour() {
 	case 9:
 		replyMsg := tgbotapi.NewStickerShare(env.ChatID, nine)
@@ -155,6 +157,21 @@ func (bot *Bot) RespNowTime() {
 		}
 	default:
 
+	}
+
+}
+
+//不用不用報時
+func (bot *Bot) TestRespNowTime() {
+	fridayTen := "CAACAgUAAxkBAAOfYzpUZR-HubpnmgABHGePT8ayrnvjAAJVBQACby-6I5UH8HAxbvwCKgQ"
+	fmt.Println(time.Now().Hour())
+	switch time.Now().Hour() {
+	default:
+		replyMsg := tgbotapi.NewStickerShare(env.LogchatID, fridayTen)
+		_, err := bot.Botapi.Send(replyMsg)
+		if err != nil {
+			bot.LogText(err.Error())
+		}
 	}
 
 }
