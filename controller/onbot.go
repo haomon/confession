@@ -29,22 +29,22 @@ func OnBot() {
 
 func timekeepSchedule(telegbot *tgbot.Bot) {
 	c := cron.New()
-	id, _ := c.AddFunc("0 9 * * 1-5", func() {
+	id, _ := c.AddFunc("0 9,12,18,22 * * 1-5", func() {
 		telegbot.RespNowTime()
 	})
 	fmt.Println(id)
-	id, _ = c.AddFunc("0 12 * * 1-5", func() {
-		telegbot.RespNowTime()
-	})
-	fmt.Println(id)
-	id, _ = c.AddFunc("0 18 * * 1-5", func() {
-		telegbot.RespNowTime()
-	})
-	fmt.Println(id)
-	id, _ = c.AddFunc("0 22 * * 1-5", func() {
-		telegbot.RespNowTime()
-	})
-	fmt.Println(id)
+	// id, _ = c.AddFunc("0 12 * * 1-5", func() {
+	// 	telegbot.RespNowTime()
+	// })
+	// fmt.Println(id)
+	// id, _ = c.AddFunc("0 18 * * 1-5", func() {
+	// 	telegbot.RespNowTime()
+	// })
+	// fmt.Println(id)
+	// id, _ = c.AddFunc("0 22 * * 1-5", func() {
+	// 	telegbot.RespNowTime()
+	// })
+	// fmt.Println(id)
 	// id, _ = c.AddFunc("5,6,7,8,9 * * * 1-5", func() {
 	// 	telegbot.TestRespNowTime()
 	// })

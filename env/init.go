@@ -10,6 +10,7 @@ import (
 func Load() {
 	setLog()
 	SetDefultValue()
+	NNX()
 }
 
 func setLog() {
@@ -47,8 +48,9 @@ func setLog() {
 
 func SetDefultValue() {
 	AlertTitle = "CaAlert通知"
-	ChatPrefix = "ㄡ~修女啊，"
+	ChatPrefix = "修女啊，"
 	Nuniskill = map[int64]string{}
+	NXNmode = false
 }
 func GetchatIDs(str_chatIDs []string) (err error, chatIDs []int64) {
 	for _, str_chatID := range str_chatIDs {
@@ -59,6 +61,19 @@ func GetchatIDs(str_chatIDs []string) (err error, chatIDs []int64) {
 		chatIDs = append(chatIDs, chatID)
 	}
 	return err, chatIDs
+}
+
+func NNX() {
+	NXN = map[string]string{}
+
+	var x, y string
+	for i := 1; i <= 9; i++ {
+		for l := 1; l <= 9; l++ {
+			x = strconv.Itoa(i) + strconv.Itoa(l)
+			y = strconv.Itoa(i * l)
+			NXN[x] = y
+		}
+	}
 }
 
 // func getMustString(key string) string {

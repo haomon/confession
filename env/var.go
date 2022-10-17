@@ -30,4 +30,6 @@ var (
 	AlertTitle string
 
 	Nuniskill map[int64]string
+	NXN       map[string]string
+	NXNmode   bool
 )
